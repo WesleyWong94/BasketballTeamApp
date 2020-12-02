@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace basketballAPI.Models
 {
-    public partial class basketballDBContext : DbContext
+    public partial class BASKETBALLDBContext : DbContext
     {
-        public basketballDBContext()
+        public BASKETBALLDBContext()
         {
         }
 
-        public basketballDBContext(DbContextOptions<basketballDBContext> options)
+        public BASKETBALLDBContext(DbContextOptions<BASKETBALLDBContext> options)
             : base(options)
         {
         }
@@ -24,8 +24,7 @@ namespace basketballAPI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=basketballDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=BASKETBALLDB;Trusted_Connection=True;");
             }
         }
 
@@ -33,19 +32,21 @@ namespace basketballAPI.Models
         {
             modelBuilder.Entity<Fixture>(entity =>
             {
-                entity.HasKey(e => e.Fixturedate)
-                    .HasName("PK_FIXTUREDATE");
-
                 entity.ToTable("FIXTURE");
+
+                entity.Property(e => e.Fixtureid)
+                    .ValueGeneratedNever()
+                    .HasColumnName("FIXTUREID");
+
+                entity.Property(e => e.Fixturecost).HasColumnName("FIXTURECOST");
 
                 entity.Property(e => e.Fixturedate)
                     .HasColumnType("datetime")
                     .HasColumnName("FIXTUREDATE");
 
-                entity.Property(e => e.Fixturename)
-                    .IsRequired()
+                entity.Property(e => e.Fixturemembername)
                     .HasMaxLength(50)
-                    .HasColumnName("FIXTURENAME");
+                    .HasColumnName("FIXTUREMEMBERNAME");
 
                 entity.Property(e => e.Fixturevenue)
                     .IsRequired()

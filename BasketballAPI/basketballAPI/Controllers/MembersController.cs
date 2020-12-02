@@ -13,9 +13,9 @@ namespace basketballAPI.Controllers
     [ApiController]
     public class MembersController : ControllerBase
     {
-        private readonly basketballDBContext _context;
+        private readonly BASKETBALLDBContext _context;
 
-        public MembersController(basketballDBContext context)
+        public MembersController(BASKETBALLDBContext context)
         {
             _context = context;
         }
@@ -65,34 +65,39 @@ namespace basketballAPI.Controllers
             }
         }
 
-        //[HttpPut] ("{fixture}")]
-        //public async IActionResult UpdatefutureFixture(Fixture fixtureRemove)
-        //{
-        //    if (fixture = fixtureRemove)
-        //    {
-        //        _context.Remove(Fixture);
-        //        _context.SaveChanges();
-        //        return Ok(Fixture);
-        //    }
-        //}
+        [HttpGet, Route("pastfixture")]
+        public IActionResult GetPastfixture()
+        {
+            var fixture = _context.Fixtures.Where(b => b.Fixturedate < DateTime.Now).ToList();
+            if (fixture != null)
+            {
+                return Ok(fixture);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
+        [HttpPost, Route("updatefixture")]
+        public IActionResult UpdateFutureFixture(Fixture fixture)
+        {
+            _context.Fixtures.Update(fixture);
+            _context.SaveChanges();
+            return Ok();
+        }
 
+        [HttpDelete, Route("deletefixture")]
+        public IActionResult DeleteFutureFixture(int fixtureid)
+        {
+            var fixture = _context.Fixtures.Where(fix => fix.Fixtureid == fixtureid).FirstOrDefault();
 
-        // DELETE: api/Members/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteMember(string id)
-        //{
-        //    var member = await _context.Members.FindAsync(id);
-        //    if (member == null)
-        //    {
-        //        return NotFound();
-        //    }
+            _context.Fixtures.Remove(fixture);
+            _context.SaveChanges();
+            return Ok();
+        }
 
-        //    _context.Members.Remove(member);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
+        
 
 
     }

@@ -19,7 +19,7 @@ namespace basketballAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<basketballDBContext>(opt => opt.UseSqlServer("Server=.\\SQLExpress;Database=basketballDB;Trusted_Connection=True;"));
+            services.AddDbContext<BASKETBALLDBContext>(opt => opt.UseSqlServer("Server=.\\SQLExpress;Database=basketballDB;Trusted_Connection=True;"));
             services.AddControllers();
             services.AddCors(options =>
             {

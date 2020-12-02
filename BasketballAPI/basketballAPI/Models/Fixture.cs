@@ -7,8 +7,10 @@ namespace basketballAPI.Models
 {
     public partial class Fixture
     {
-        public string Fixturename { get; set; }
+        public int Fixtureid { get; set; }
         public DateTime Fixturedate { get; set; }
         public string Fixturevenue { get; set; }
+        public string Fixturemembername { get; set; }
+        public double? Fixturecost { get; set; }
     }
 }
